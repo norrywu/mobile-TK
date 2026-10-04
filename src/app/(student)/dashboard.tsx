@@ -2,12 +2,11 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { router } from "expo-router";
 import { authClient } from "@/lib/auth-client";
 
-export default function DashboardScreen() {
+export default function StudentDashboardScreen() {
   const { data: session } = authClient.useSession();
   const user = session?.user as
-    | { name?: string | null; email?: string | null; role?: string | null }
+    | { name?: string | null; email?: string | null }
     | undefined;
-  const role = user?.role ?? null;
 
   const handleLogout = async () => {
     await authClient.signOut();
@@ -17,29 +16,15 @@ export default function DashboardScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
-        Halo, {user?.name || user?.email || "Pengguna"}!
+        Halo, {user?.name || user?.email || "Siswa"}!
       </Text>
-      <Text style={styles.subtitle}>
-        {role === "admin"
-          ? "Masuk sebagai Administrator."
-          : role === "student"
-            ? "Masuk sebagai Siswa."
-            : "Memuat peran..."}
-      </Text>
+      <Text style={styles.subtitle}>Masuk sebagai Siswa.</Text>
 
-      {role === "admin" ? (
-        <View style={styles.menu}>
-          <Text style={styles.menuTitle}>Menu Admin</Text>
-          <Text style={styles.menuItem}>• Scan QR (segera hadir)</Text>
-          <Text style={styles.menuItem}>• Kelola (segera hadir)</Text>
-        </View>
-      ) : role === "student" ? (
-        <View style={styles.menu}>
-          <Text style={styles.menuTitle}>Akun Saya</Text>
-          <Text style={styles.menuItem}>• Email: {user?.email ?? "-"}</Text>
-          <Text style={styles.menuItem}>• QR siswa (segera hadir)</Text>
-        </View>
-      ) : null}
+      <View style={styles.menu}>
+        <Text style={styles.menuTitle}>Akun Saya</Text>
+        <Text style={styles.menuItem}>• Email: {user?.email ?? "-"}</Text>
+        <Text style={styles.menuItem}>• QR siswa (segera hadir)</Text>
+      </View>
 
       <Pressable style={styles.button} onPress={handleLogout}>
         <Text style={styles.buttonText}>Keluar</Text>

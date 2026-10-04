@@ -4,6 +4,7 @@ import { authClient } from "@/lib/auth-client";
 
 export default function RootLayout() {
   const { data: session, isPending } = authClient.useSession();
+  const role = (session?.user as { role?: string | null } | undefined)?.role;
 
   if (isPending) {
     return (
@@ -15,10 +16,16 @@ export default function RootLayout() {
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      {session ? (
-        <Stack.Screen name="(tabs)" />
-      ) : (
+      {!session ? (
         <Stack.Screen name="(auth)" />
+      ) : role === "admin" ? (
+        <Stack.Screen name="(admin)" />
+      ) : role === "student" ? (
+        <Stack.Screen name="(student)" />
+      ) : (
+        // Role tak dikenal/null: jangan mount grup mana pun (cegah loop
+        // antar guard), tampilkan layar fallback sebagai gantinya.
+        <Stack.Screen name="no-role" />
       )}
     </Stack>
   );

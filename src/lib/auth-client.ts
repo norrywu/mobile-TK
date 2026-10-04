@@ -8,7 +8,7 @@ import * as SecureStore from "expo-secure-store";
  * EXPO_PUBLIC_API_URL=http://192.168.x.x:3001
  */
 const API_URL =
-  process.env.EXPO_PUBLIC_API_URL ?? "http://10.203.123.183:3001";
+  process.env.EXPO_PUBLIC_API_URL ?? "http://192.168.11.157:3001";
 
 export const authClient = createAuthClient({
   baseURL: `${API_URL}/api/auth`,

@@ -38,7 +38,7 @@ export default function LoginScreen() {
     setError(null);
     setIsLoading(true);
     try {
-      const { error: signInError } = await authClient.signIn.email({
+      const { data, error: signInError } = await authClient.signIn.email({
         email: email.trim(),
         password,
       });
@@ -46,7 +46,10 @@ export default function LoginScreen() {
         setError(toIndonesian(signInError.message ?? ""));
         return;
       }
-      router.replace("/(tabs)/dashboard");
+      const role = (data?.user as { role?: string | null } | undefined)?.role;
+      router.replace(
+        role === "admin" ? "/(admin)/dashboard" : "/(student)/dashboard"
+      );
     } catch (err) {
       setError(toIndonesian(err instanceof Error ? err.message : ""));
     } finally {
