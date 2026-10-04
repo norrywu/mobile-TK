@@ -1,5 +1,6 @@
 import { create } from "axios";
-import { authClient, API_BASE_URL } from "./auth-client";
+import { authClient } from "./auth-client";
+import { API_BASE_URL } from "@/configs";
 
 export const api = create({
   baseURL: API_BASE_URL,
