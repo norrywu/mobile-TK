@@ -2,9 +2,6 @@ export const API_ENDPOINTS = {
   AUTH: {
     GET_SESSION: "/api/auth/get-session",
   },
-  ADMIN: {
-    LIST_USERS: "/api/auth/admin/list-users",
-  },
   CLASS: {
     LIST: "/api/class",
     CREATE: "/api/class",

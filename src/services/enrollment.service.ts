@@ -20,4 +20,15 @@ export const enrollmentService = {
     );
     return response.data?.data ?? [];
   },
+
+  setUserClasses: async (
+    userId: string,
+    classIds: string[],
+  ): Promise<EnrollmentItem[]> => {
+    const response = await api.put<EnrollmentListResponse>(
+      API_ENDPOINTS.ENROLLMENTS.SET_USER_CLASSES(userId),
+      { classIds },
+    );
+    return response.data?.data ?? [];
+  },
 };

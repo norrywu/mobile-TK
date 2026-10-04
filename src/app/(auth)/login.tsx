@@ -48,7 +48,7 @@ export default function LoginScreen() {
       }
       const role = (data?.user as { role?: string | null } | undefined)?.role;
       router.replace(
-        role === "admin" ? "/(admin)/dashboard" : "/(student)/dashboard",
+        role === "admin" ? "/(admin)/(tabs)/dashboard" : "/(student)/dashboard",
       );
     } catch (err) {
       setError(toIndonesian(err instanceof Error ? err.message : ""));

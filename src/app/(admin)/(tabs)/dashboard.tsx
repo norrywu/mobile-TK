@@ -91,7 +91,7 @@ export default function AdminDashboardScreen() {
       <Text style={styles.menuTitle}>Menu Admin</Text>
       <Pressable
         style={styles.menuButton}
-        onPress={() => router.push("/(admin)/scan")}
+        onPress={() => router.push("/(admin)/(tabs)/scan")}
       >
         <Text style={styles.menuButtonText}>Scan QR</Text>
       </Pressable>

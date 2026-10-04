@@ -1,5 +1,4 @@
-import { api } from "@/lib/axios";
-import { API_ENDPOINTS } from "./endpoints";
+import { authClient } from "@/lib/auth-client";
 
 export interface BackendUser {
   id: string;
@@ -8,18 +7,22 @@ export interface BackendUser {
   role?: string | null;
 }
 
-interface ListUsersResponse {
-  users?: BackendUser[];
-}
-
 export const adminService = {
   listUsers: async (): Promise<BackendUser[]> => {
-    const response = await api.get<ListUsersResponse | BackendUser[]>(
-      API_ENDPOINTS.ADMIN.LIST_USERS,
-    );
-    if (Array.isArray(response.data)) {
-      return response.data;
+    const { data, error } = await authClient.admin.listUsers({ query: {} });
+    if (error) {
+      throw new Error(error.message || "Gagal memuat daftar pengguna.");
     }
-    return response.data?.users ?? [];
+    return data?.users ?? [];
+  },
+
+  getUser: async (id: string): Promise<BackendUser | null> => {
+    const { data, error } = await authClient.admin.getUser({
+      query: { id },
+    });
+    if (error) {
+      throw new Error(error.message || "Gagal mengambil data pengguna.");
+    }
+    return data ?? null;
   },
 };

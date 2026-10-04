@@ -3,7 +3,6 @@ import { API_ENDPOINTS } from "./endpoints";
 
 export interface StudentProfile {
   id: string;
-  student_name: string;
   qrCode: string | null;
   gender: "laki-laki" | "perempuan" | null;
 }
