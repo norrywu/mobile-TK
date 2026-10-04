@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "dependencies": {
     "@better-auth/expo": "1.6.29",
+    "@expo/material-symbols": "^0.1.1",
     "@expo/ui": "~57.0.21",
     "better-auth": "1.6.29",
     "expo": "~57.0.26",
