@@ -4,9 +4,7 @@ export default function StudentQrStubScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>QR Saya</Text>
-      <Text style={styles.subtitle}>
-        QR identitasmu segera hadir di sini.
-      </Text>
+      <Text style={styles.subtitle}>QR identitasmu segera hadir di sini.</Text>
     </View>
   );
 }

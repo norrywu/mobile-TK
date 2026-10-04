@@ -1,6 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { router } from "expo-router";
-import { authClient } from "@/lib/auth-client";
+import { useLogout } from "@/hooks/use-logout";
 
 /**
  * Layar fallback untuk sesi yang role-nya tidak dikenal
@@ -8,10 +7,7 @@ import { authClient } from "@/lib/auth-client";
  * Mencegah ping-pong redirect antar guard grup.
  */
 export default function NoRoleScreen() {
-  const handleLogout = async () => {
-    await authClient.signOut();
-    router.replace("/(auth)/login");
-  };
+  const { logout, isLoggingOut } = useLogout();
 
   return (
     <View style={styles.container}>
@@ -20,8 +16,14 @@ export default function NoRoleScreen() {
         Akunmu tidak memiliki peran yang valid. Hubungi administrator untuk
         memperbaiki data akunmu, lalu masuk kembali.
       </Text>
-      <Pressable style={styles.button} onPress={handleLogout}>
-        <Text style={styles.buttonText}>Keluar</Text>
+      <Pressable
+        style={[styles.button, isLoggingOut && styles.buttonDisabled]}
+        onPress={logout}
+        disabled={isLoggingOut}
+      >
+        <Text style={styles.buttonText}>
+          {isLoggingOut ? "Keluar..." : "Keluar"}
+        </Text>
       </Pressable>
     </View>
   );
@@ -57,5 +59,8 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "600",
+  },
+  buttonDisabled: {
+    opacity: 0.6,
   },
 });

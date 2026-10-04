@@ -1,17 +1,13 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { router } from "expo-router";
 import { authClient } from "@/lib/auth-client";
+import { useLogout } from "@/hooks/use-logout";
 
 export default function StudentDashboardScreen() {
   const { data: session } = authClient.useSession();
   const user = session?.user as
-    | { name?: string | null; email?: string | null }
-    | undefined;
+    { name?: string | null; email?: string | null } | undefined;
 
-  const handleLogout = async () => {
-    await authClient.signOut();
-    router.replace("/(auth)/login");
-  };
+  const { logout, isLoggingOut } = useLogout();
 
   return (
     <View style={styles.container}>
@@ -26,8 +22,14 @@ export default function StudentDashboardScreen() {
         <Text style={styles.menuItem}>• QR siswa (segera hadir)</Text>
       </View>
 
-      <Pressable style={styles.button} onPress={handleLogout}>
-        <Text style={styles.buttonText}>Keluar</Text>
+      <Pressable
+        style={[styles.button, isLoggingOut && styles.buttonDisabled]}
+        onPress={logout}
+        disabled={isLoggingOut}
+      >
+        <Text style={styles.buttonText}>
+          {isLoggingOut ? "Keluar..." : "Keluar"}
+        </Text>
       </Pressable>
     </View>
   );
@@ -71,5 +73,8 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "600",
+  },
+  buttonDisabled: {
+    opacity: 0.6,
   },
 });
