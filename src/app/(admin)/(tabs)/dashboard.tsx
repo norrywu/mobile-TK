@@ -95,6 +95,12 @@ export default function AdminDashboardScreen() {
       >
         <Text style={styles.menuButtonText}>Scan QR</Text>
       </Pressable>
+      <Pressable
+        style={styles.menuButton}
+        onPress={() => router.push("/(admin)/users")}
+      >
+        <Text style={styles.menuButtonText}>Kelola Pengguna</Text>
+      </Pressable>
 
       <Pressable
         style={[styles.logoutButton, isLoggingOut && styles.buttonDisabled]}
